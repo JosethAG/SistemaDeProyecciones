@@ -9,49 +9,51 @@
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-
-<div class="container">
-    <h2 class="text-center mt-4">Gestión de Datos</h2>
-
-    <div class="form-group mt-5">
-        <label for="fileInput">Cargar archivo de Excel:</label>
-        <div class="custom-file">
-            <input type="file" class="custom-file-input" id="fileInput" accept=".xlsx, .xls, .csv">
-            <label class="custom-file-label" for="fileInput">Seleccionar archivo...</label>
+        <div id="menu">
+        <?php include 'menu.php'; ?>
         </div>
-        <button id="submitFile" class="btn btn-primary mt-3">Cargar datos</button>
-    </div>
+    <div class="container">
+        <h2 class="text-center mt-4">Gestión de Datos</h2>
 
-    <div class="table-container">
-        <table id="dataTable" class="table table-dark table-striped table-bordered">
-            <thead>
-                <tr>
-                    <th>Fecha Carga</th>
-                    <th>Fecha</th>
-                    <th>Hora</th>
-                    <th>Departamento</th>
-                    <th>Cantidad de Clientes</th>
-                    <th>Ajuste</th>
-                    <th>Acciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td contenteditable="true">2023-01-01</td>
-                    <td contenteditable="true">2023-01-01</td>
-                    <td contenteditable="true">10:00:00</td>
-                    <td contenteditable="true">Servicio al Cliente</td>
-                    <td contenteditable="true">15</td>
-                    <td contenteditable="true">No</td>
-                    <td>
-                        <button class="btn btn-success btn-sm save-btn">Guardar</button>
-                        <button class="btn btn-danger btn-sm delete-btn">Eliminar</button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+        <div class="form-group mt-5">
+            <label for="fileInput">Cargar archivo de Excel:</label>
+            <div class="custom-file">
+                <input type="file" class="custom-file-input" id="fileInput" accept=".xlsx, .xls, .csv">
+                <label class="custom-file-label" for="fileInput">Seleccionar archivo...</label>
+            </div>
+            <button id="submitFile" class="btn btn-primary mt-3">Cargar datos</button>
+        </div>
+
+        <div class="table-container">
+            <table id="dataTable" class="table table-dark table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th>Fecha Carga</th>
+                        <th>Fecha</th>
+                        <th>Hora</th>
+                        <th>Departamento</th>
+                        <th>Cantidad de Clientes</th>
+                        <th>Ajuste</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td contenteditable="true">2023-01-01</td>
+                        <td contenteditable="true">2023-01-01</td>
+                        <td contenteditable="true">10:00:00</td>
+                        <td contenteditable="true">Servicio al Cliente</td>
+                        <td contenteditable="true">15</td>
+                        <td contenteditable="true">No</td>
+                        <td>
+                            <button class="btn btn-success btn-sm save-btn">Guardar</button>
+                            <button class="btn btn-danger btn-sm delete-btn">Eliminar</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
-</div>
 
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>

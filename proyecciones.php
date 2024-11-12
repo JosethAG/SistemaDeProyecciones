@@ -10,7 +10,9 @@
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-
+    <div id="menu">
+        <?php include 'menu.php'; ?>
+    </div>
 <div class="container">
     <h2 class="text-center mt-4">Proyecciones de Demanda</h2>
 

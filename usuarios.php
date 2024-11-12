@@ -13,8 +13,6 @@
     <div id="menu">
     <?php include 'menu.php'; ?>
     </div>
-    <div class="container">
-
-    </div>
+    
 </body>
 </html>
