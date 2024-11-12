@@ -4,71 +4,73 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Proyecciones de Demanda</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
+<div id="menu">
+    <?php include 'menu.php'; ?>
+</div>
+<div class="container mt-4">
+    <h2 class="text-center">Análisis de Desempeño</h2>
 
-<div class="container">
-    <h2 class="text-center mt-4">Analisis de Desempeño</h2>
-
-    <div class="form-row mt-4">
-        <div class="form-group col-md-4">
-            <label for="filterDepartment">Filtrar por Departamento:</label>
-            <select id="filterDepartment" class="form-control">
+    <h4 class="mt-5">Datos Históricos</h4>
+    <div class="row g-3 mb-3 mt-2">
+        <div class="col-md-4">
+            <label for="filterDepartment" class="form-label">Filtrar por Departamento:</label>
+            <select id="filterDepartment" class="form-select">
                 <option value="">Todos</option>
                 <option value="Servicio al Cliente">Servicio al Cliente</option>
                 <option value="Cajas">Cajas</option>
                 <option value="Crédito">Crédito</option>
             </select>
         </div>
-        <div class="form-group col-md-4">
-            <label for="startDate">Fecha de Inicio:</label>
+        <div class="col-md-4">
+            <label for="startDate" class="form-label">Fecha de Inicio:</label>
             <input type="date" id="startDate" class="form-control">
         </div>
-        <div class="form-group col-md-4">
-            <label for="endDate">Fecha Final:</label>
+        <div class="col-md-4">
+            <label for="endDate" class="form-label">Fecha Final:</label>
             <input type="date" id="endDate" class="form-control">
         </div>
     </div>
 
-    <button id="selectAll" class="btn btn-secondary mb-3">Seleccionar Todos</button>
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <button id="selectAll" class="btn btn-secondary">Seleccionar Todos</button>       
+    </div>
 
-    <div class="table-container">
+    <div class="table-responsive">
         <table id="dataTable" class="table table-dark table-striped table-bordered">
             <thead>
                 <tr>
                     <th><input type="checkbox" id="selectAllCheckbox"></th>
-                    <th>Fecha Carga</th>
                     <th>Fecha</th>
                     <th>Hora</th>
                     <th>Departamento</th>
-                    <th>Cantidad de Clientes</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
                     <td><input type="checkbox" class="data-row-checkbox"></td>
                     <td>2023-01-01</td>
-                    <td>2023-01-01</td>
                     <td>10:00:00</td>
                     <td>Servicio al Cliente</td>
-                    <td>15</td>
                 </tr>
             </tbody>
         </table>
     </div>
 
-    <button id="generateProjection" class="btn btn-primary mt-4">Generar Proyección</button>
-
-    <div class="chart-container mt-5">
-        <canvas id="projectionChart"></canvas>
+    <h4 class="mt-5">Proyección</h4>
+    <div class="input-group w-auto mb-3" style="max-width: 300px;">
+        <input type="text" id="searchProjection" class="form-control form-control-sm" placeholder="Buscar proyección">
+        <span class="input-group-text"><i class="fas fa-search"></i></span>
     </div>
 
-    <div class="table-container mt-4">
-        <table id="resultsTable" class="table table-dark table-striped table-bordered">
+    <div class="table-responsive">
+        <table id="projectionTable" class="table table-dark table-striped table-bordered">
             <thead>
                 <tr>
                     <th>Fecha</th>
@@ -79,18 +81,25 @@
             </thead>
             <tbody>
                 <tr>
-                    <td>2023-01-02</td>
+                    <td>2023-01-01</td>
                     <td>10:00:00</td>
                     <td>Servicio al Cliente</td>
-                    <td>25</td>
+                    <td>15</td>
                 </tr>
             </tbody>
         </table>
-        <button id="downloadResults" class="btn btn-success mt-3">Descargar Resultados</button>
     </div>
+
+    <button id="generateProjection" class="btn btn-primary mt-4">Generar Análisis</button>
+
+    <div class="chart-container mt-5">
+        <canvas id="projectionChart"></canvas>
+    </div>
+</div>
 
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 <script>
     $(document).ready(function() {
         $('#dataTable').DataTable({
@@ -126,13 +135,23 @@
             type: 'line',
             data: {
                 labels: ['2023-01-01', '2023-01-02', '2023-01-03'],
-                datasets: [{
-                    label: 'Proyección de Clientes',
-                    data: [10, 15, 12],
-                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                    borderColor: 'rgba(54, 162, 235, 1)',
-                    borderWidth: 1
-                }]
+                datasets: [
+                    {
+                        label: 'Proyección de Clientes',
+                        data: [10, 15, 12],
+                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'Datos Históricos',
+                        data: [8, 14, 10],
+                        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                        borderColor: 'rgba(255, 99, 132, 1)',
+                        borderWidth: 1,
+                        borderDash: [5, 5]
+                    }
+                ]
             },
             options: {
                 scales: {
@@ -143,6 +162,5 @@
         });
     });
 </script>
-
 </body>
 </html>
