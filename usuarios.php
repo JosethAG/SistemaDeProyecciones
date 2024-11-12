@@ -11,8 +11,10 @@
 </head>
 <body>
     <div id="menu">
-    <?php include 'menu.php'; ?>
+        <?php include 'menu.php'; ?>
     </div>
-    
+    <div>
+        
+    </div>
 </body>
 </html>
