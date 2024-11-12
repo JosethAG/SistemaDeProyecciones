@@ -30,3 +30,16 @@ body {
 #dataTable_wrapper .dataTables_paginate {
     color: #ffffff;
 }
+
+.table-striped tbody tr {
+    background-color: #1e1f22 !important; 
+}
+.table-striped tbody tr:hover {
+    background-color: #2a2b2e !important; 
+}
+
+.table-striped tbody tr td,
+.table-striped thead tr th {
+    text-align: center; 
+    vertical-align: middle; 
+}
