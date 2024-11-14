@@ -13,60 +13,62 @@
     <div id="menu">
         <?php include 'menu.php'; ?>
     </div>
-    <div class="max-w-9xl mx-auto p-4">
-        <div class="row">
-            <div class="col-md-6">
-                <h4>Datos del Usuario</h4>
-                <form>
-                    <div class="mb-3">
-                        <label for="nombre" class="form-label">Nombre</label>
-                        <input type="text" class="form-control" id="nombre" placeholder="Ingrese el nombre">
-                    </div>
-                    <div class="mb-3">
-                        <label for="correo" class="form-label">Correo</label>
-                        <input type="email" class="form-control" id="correo" placeholder="Ingrese el correo">
-                    </div>
-                    <div class="mb-3">
-                        <label for="rol" class="form-label">Rol</label>
-                        <select class="form-select" id="rol">
-                            <option selected>Seleccione el rol</option>
-                            <option value="Admin">Admin</option>
-                            <option value="User">User</option>
-                        </select>
-                    </div>
-                    <div class="d-flex gap-2">
-                        <button type="submit" class="btn btn-outline-success">Guardar</button>
-                        <button type="button" class="btn btn-outline-danger">Cancelar</button>
-                    </div>
-                </form>
-            </div>
+    <div class="container">
+        <div class="max-w-9xl mx-auto p-4">
+            <div class="row">
+                <div class="col-md-6">
+                    <h4>Datos del Usuario</h4>
+                    <form>
+                        <div class="mb-3">
+                            <label for="nombre" class="form-label">Nombre</label>
+                            <input type="text" class="form-control" id="nombre" placeholder="Ingrese el nombre">
+                        </div>
+                        <div class="mb-3">
+                            <label for="correo" class="form-label">Correo</label>
+                            <input type="email" class="form-control" id="correo" placeholder="Ingrese el correo">
+                        </div>
+                        <div class="mb-3">
+                            <label for="rol" class="form-label">Rol</label>
+                            <select class="form-select" id="rol">
+                                <option selected>Seleccione el rol</option>
+                                <option value="Admin">Admin</option>
+                                <option value="User">User</option>
+                            </select>
+                        </div>
+                        <div class="d-flex gap-2">
+                            <button type="submit" class="btn btn-outline-success">Guardar</button>
+                            <button type="button" class="btn btn-outline-danger">Cancelar</button>
+                        </div>
+                    </form>
+                </div>
 
-            <div class="col-md-6">
-                <h4 class="text-center">Lista de Usuarios</h4>
-                <table class="table table-dark table-striped align-middle">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Nombre</th>
-                            <th>Correo</th>
-                            <th>Rol</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>01</td>
-                            <td>David Gon</td>
-                            <td>D@d.com</td>
-                            <td>Admin</td>
-                        </tr>
-                        <tr>
-                            <td>02</td>
-                            <td>Karen Dit</td>
-                            <td>k@d.com</td>
-                            <td>User</td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div class="col-md-6">
+                    <h4 class="text-center">Lista de Usuarios</h4>
+                    <table class="table table-dark table-striped align-middle">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nombre</th>
+                                <th>Correo</th>
+                                <th>Rol</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>01</td>
+                                <td>David Gon</td>
+                                <td>D@d.com</td>
+                                <td>Admin</td>
+                            </tr>
+                            <tr>
+                                <td>02</td>
+                                <td>Karen Dit</td>
+                                <td>k@d.com</td>
+                                <td>User</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
