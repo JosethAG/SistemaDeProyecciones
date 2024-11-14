@@ -4,37 +4,40 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Proyecciones de Demanda</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="css/styles.css">
 </head>
-<body>
+<body class="bg-dark text-light">
+<div id="menu">
+    <?php include 'menu.php'; ?>
+</div>
+<div class="container py-4">
+    <h2 class="text-center mb-4">Reportes de Proyecciones de Demanda</h2>
 
-<div class="container">
-    <h2 class="text-center mt-4">Reportes</h2>
-
-    <div class="form-row mt-4">
-        <div class="form-group col-md-4">
-            <label for="filterDepartment">Filtrar por Departamento:</label>
-            <select id="filterDepartment" class="form-control">
+    <div class="row g-3">
+        <div class="col-md-4">
+            <label for="filterDepartment" class="form-label">Filtrar por Departamento:</label>
+            <select id="filterDepartment" class="form-select">
                 <option value="">Todos</option>
                 <option value="Servicio al Cliente">Servicio al Cliente</option>
                 <option value="Cajas">Cajas</option>
                 <option value="Crédito">Crédito</option>
             </select>
         </div>
-        <div class="form-group col-md-4">
-            <label for="startDate">Fecha de Inicio:</label>
+        <div class="col-md-4">
+            <label for="startDate" class="form-label">Fecha de Inicio:</label>
             <input type="date" id="startDate" class="form-control">
         </div>
-        <div class="form-group col-md-4">
-            <label for="endDate">Fecha Final:</label>
+        <div class="col-md-4">
+            <label for="endDate" class="form-label">Fecha Final:</label>
             <input type="date" id="endDate" class="form-control">
         </div>
     </div>
 
-    <div class="table-container">
+    <div class="table-responsive mt-4">
         <table id="dataTable" class="table table-dark table-striped table-bordered">
             <thead>
                 <tr>
@@ -94,15 +97,17 @@
                     <td>No</td>
                 </tr>
             </tbody>
-            
         </table>
-    </div>   
+    </div> 
 
     <div class="chart-container mt-5">
         <canvas id="projectionChart"></canvas>
     </div>
-        <button id="downloadResults" class="btn btn-success mt-3">Descargar Resultados</button>
+    
+    <div class="mt-4">
+        <button id="downloadResults" class="btn btn-success">Descargar Resultados</button>
     </div>
+</div>
 
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
