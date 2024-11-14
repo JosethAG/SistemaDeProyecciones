@@ -18,9 +18,8 @@
 
         <div class="form-group mt-5">
             <label for="fileInput">Cargar archivo de Excel:</label>
-            <div class="custom-file">
-                <input type="file" class="custom-file-input" id="fileInput" accept=".xlsx, .xls, .csv">
-                <label class="custom-file-label" for="fileInput">Seleccionar archivo...</label>
+            <div class="input-group mb-3">
+                <input type="file" class="form-control" id="fileInput" accept=".xlsx, .xls, .csv">
             </div>
             <button id="submitFile" class="btn btn-primary mt-3">Cargar datos</button>
         </div>
@@ -61,7 +60,6 @@
 <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
 <script>
     $(document).ready(function() {
-
         $('#dataTable').DataTable({
             language: {
                 "decimal": "",
@@ -78,8 +76,8 @@
                 "paginate": {
                     "first": "Primero",
                     "last": "Último",
-                    "next": "Siguiente",
-                    "previous": "Anterior"
+                    "next": " Siguiente",
+                    "previous": "Anterior "
                 }
             }
         });
