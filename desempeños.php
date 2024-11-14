@@ -92,8 +92,14 @@
 
     <button id="generateProjection" class="btn btn-primary mt-4">Generar Análisis</button>
 
+    <h4 class="mt-5">Proyección contra Historico</h4>
     <div class="chart-container mt-5">
         <canvas id="projectionChart"></canvas>
+    </div>
+
+    <h4 class="mt-5">Desviación entre Históricos y Proyección</h4>
+    <div class="chart-container mt-5">
+        <canvas id="deviationChart"></canvas>
     </div>
 </div>
 
@@ -152,6 +158,27 @@
                         borderDash: [5, 5]
                     }
                 ]
+            },
+            options: {
+                scales: {
+                    x: { beginAtZero: true },
+                    y: { beginAtZero: true }
+                }
+            }
+        });
+
+        const ctxDeviation = document.getElementById('deviationChart').getContext('2d');
+        const deviationChart = new Chart(ctxDeviation, {
+            type: 'bar',
+            data: {
+                labels: ['2023-01-01', '2023-01-02', '2023-01-03'],
+                datasets: [{
+                    label: 'Desviación (Histórico - Proyección)',
+                    data: [-2, -1, -2],  // Desviación entre datos históricos y proyecciones
+                    backgroundColor: 'rgba(255, 159, 64, 0.2)',
+                    borderColor: 'rgba(255, 159, 64, 1)',
+                    borderWidth: 1
+                }]
             },
             options: {
                 scales: {
