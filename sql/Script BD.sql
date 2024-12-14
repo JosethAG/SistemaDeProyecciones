@@ -1,17 +1,17 @@
--- Creación de la base de datos
+-- Creaciï¿½n de la base de datos
 CREATE DATABASE IF NOT EXISTS gestion_datos;
 USE gestion_datos;
 
--- Creación de la tabla Usuarios
+-- Creaciï¿½n de la tabla Usuarios
 CREATE TABLE Usuarios (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(255) NOT NULL,
     correo VARCHAR(255) NOT NULL UNIQUE,
-    contraseña VARCHAR(255) NOT NULL,
+    contrasenna VARCHAR(255) NOT NULL,
     rol VARCHAR(50) NOT NULL
 );
 
--- Creación de la tabla Historicos
+-- Creaciï¿½n de la tabla Historicos
 CREATE TABLE Historicos (
     id INT AUTO_INCREMENT PRIMARY KEY,
     id_usuario INT NOT NULL,
@@ -24,7 +24,7 @@ CREATE TABLE Historicos (
     FOREIGN KEY (id_usuario) REFERENCES Usuarios(id)
 );
 
--- Creación de la tabla Proyecciones
+-- Creaciï¿½n de la tabla Proyecciones
 CREATE TABLE Proyecciones (
     id INT AUTO_INCREMENT PRIMARY KEY,
     id_usuario INT NOT NULL,
@@ -37,7 +37,7 @@ CREATE TABLE Proyecciones (
     FOREIGN KEY (id_usuario) REFERENCES Usuarios(id)
 );
 
--- Creación de la tabla Historico_Reportes
+-- Creaciï¿½n de la tabla Historico_Reportes
 CREATE TABLE Historico_Reportes (
     id INT AUTO_INCREMENT PRIMARY KEY,
     id_usuario INT NOT NULL,
