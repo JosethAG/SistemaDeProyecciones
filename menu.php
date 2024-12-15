@@ -16,7 +16,7 @@
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" href="carga_datos.php">CARGA DE DATOS</a></li>
             <li><a class="dropdown-item" href="proyecciones.php">PROYECCIONES</a></li>
-            <li><a class="dropdown-item" href="desempeños.php">ANÁLISIS DE DESEMPEÑO</a></li>
+            <li><a class="dropdown-item" href="desempenos.php">ANÁLISIS DE DESEMPEÑO</a></li>
           </ul>
         </li>
         <li class="nav-item">
