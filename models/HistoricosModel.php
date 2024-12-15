@@ -1,29 +1,29 @@
 <?php
-class HistoricosModel {
+class UsuarioModel {
     private $conn;
-    private $table_name = "Historicos";
+    private $table_name = "Usuarios";
 
     public function __construct($db) {
         $this->conn = $db;
     }
 
-    public function readAll($department, $startDate, $endDate) {
-        $query = "SELECT fecha, hora, departamento, can_clientes FROM " . $this->table_name . " WHERE 1=1";
+    public function readAll($nombre, $correo, $rol) {
+        $query = "SELECT id, nombre, correo, rol FROM " . $this->table_name . " WHERE 1=1";
 
         $conditions = [];
         $params = [];
 
-        if (!empty($department)) {
-            $conditions[] = "departamento = :department";
-            $params[":department"] = $department;
+        if (!empty($nombre)) {
+            $conditions[] = "nombre LIKE :nombre";
+            $params[":nombre"] = "%" . $nombre . "%";
         }
-        if (!empty($startDate)) {
-            $conditions[] = "fecha >= :startDate";
-            $params[":startDate"] = $startDate;
+        if (!empty($correo)) {
+            $conditions[] = "correo = :correo";
+            $params[":correo"] = $correo;
         }
-        if (!empty($endDate)) {
-            $conditions[] = "fecha <= :endDate";
-            $params[":endDate"] = $endDate;
+        if (!empty($rol)) {
+            $conditions[] = "rol = :rol";
+            $params[":rol"] = $rol;
         }
 
         if (!empty($conditions)) {
