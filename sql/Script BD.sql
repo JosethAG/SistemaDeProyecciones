@@ -15,7 +15,7 @@ CREATE TABLE Usuarios (
 CREATE TABLE Historicos (
     id INT AUTO_INCREMENT PRIMARY KEY,
     id_usuario INT NOT NULL,
-    fecha_carga DATETIME NOT NULL,
+    fecha_carga DATETIME NOT NULL DEFAULT current_timestamp(),
     fecha DATE NOT NULL,
     hora TIME NOT NULL,
     departamento VARCHAR(100) NOT NULL,
