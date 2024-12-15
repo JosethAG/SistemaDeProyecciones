@@ -39,6 +39,7 @@
                             <th>Departamento</th>
                             <th>Cantidad de Clientes</th>
                             <th>Ajuste Manual</th>
+                            <th>Acciones</th>
                         </tr>
                     </thead>
                     <tbody>

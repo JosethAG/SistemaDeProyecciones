@@ -15,16 +15,21 @@ if(isset($_FILES['archivo'])) {
         $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($rutaTemporal);
         $data = $spreadsheet->getActiveSheet()->toArray();
 
-        foreach ($data as $index) {
+        foreach ($data as $index => $row) {
             if ($index === 0) continue;
 
-            $fecha = $index[0];
-            $hora = $index[1];
-            $departamento = $index[2];
-            $can_clientes = $index[3];
-            $editado = isset($index[4]) ? $index[4] : 0;
+            if (empty($row[1]) || empty($row[2]) || empty($row[3]) || empty($row[4])) {
+                continue; // Si algún campo clave está vacío, salta a la siguiente fila
+            }
 
-            $sql = "INSERT INTO historicos (id_usuario,fecha, hora, departamento, can_clientes, editado) VALUES (1, '$fecha', '$hora', '$departamento', '$can_clientes', '$editado')";
+            $id_usuario = 1;
+            $fecha = date('Y-m-d', strtotime($row[1]));
+            $hora = date('H:i:s', strtotime($row[2]));
+            $departamento = $row[3];
+            $can_clientes = (int)$row[4];
+            $editado = (int)$row[5];
+
+            $sql = "INSERT INTO historicos (id_usuario,fecha, hora, departamento, can_clientes, editado) VALUES ($id_usuario, '$fecha', '$hora', '$departamento', '$can_clientes', '$editado')";
             
             if ($conn->query($sql) === TRUE) {
                 // si funciono

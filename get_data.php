@@ -13,7 +13,7 @@ if ($result->num_rows > 0) {
             'hora' => $row['hora'],
             'departamento' => $row['departamento'],
             'can_clientes' => $row['can_clientes'],
-            'editado' => $row['ajuste_manual'] ? 'Sí' : 'No'
+            'editado' => $row['editado'] ? 'Sí' : 'No'
         ];
     }
 }
