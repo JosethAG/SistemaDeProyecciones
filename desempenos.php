@@ -3,121 +3,221 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Proyecciones de Demanda</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
+    <title>Desempeños</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/styles.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
 <div id="menu">
     <?php include 'menu.php'; ?>
 </div>
-<div class="container mt-4">
-    <h2 class="text-center">Análisis de Desempeño</h2>
+    <div class="container mt-5">
+        <h1 class="text-center">Gestión de Desempeños</h1>
 
-    <h4 class="mt-5">Datos Históricos</h4>
-    <div class="row g-3 mb-3 mt-2">
-        <div class="col-md-4">
-            <label for="filterDepartment" class="form-label">Filtrar por Departamento:</label>
-            <select id="filterDepartment" class="form-select">
-                <option value="">Todos</option>
-                <option value="Servicio al Cliente">Servicio al Cliente</option>
-                <option value="Cajas">Cajas</option>
-                <option value="Crédito">Crédito</option>
-            </select>
+        <!-- Sección de filtros -->
+        <div class="mb-4">
+            <h3>Filtros de Históricos</h3>
+            <div class="row g-2">
+                <div class="col-md-4">
+                    <input type="text" id="filterDepartment" class="form-control" placeholder="Departamento">
+                </div>
+                <div class="col-md-4">
+                    <input type="date" id="startDate" class="form-control">
+                </div>
+                <div class="col-md-4">
+                    <input type="date" id="endDate" class="form-control">
+                </div>
+            </div>
         </div>
-        <div class="col-md-4">
-            <label for="startDate" class="form-label">Fecha de Inicio:</label>
-            <input type="date" id="startDate" class="form-control">
-        </div>
-        <div class="col-md-4">
-            <label for="endDate" class="form-label">Fecha Final:</label>
-            <input type="date" id="endDate" class="form-control">
-        </div>
-    </div>
 
-    <div class="table-responsive">
-        <table id="dataTable" class="table table-dark table-striped table-bordered">
-            <thead>
+        <!-- Tabla de históricos -->
+        <table id="dataTable" class="table table-striped table-hover">
+            <thead class="table-dark">
                 <tr>
-                    <th><input type="checkbox" id="selectAllCheckbox"></th>
+                    <th><input type="checkbox" id="selectAllHistoricos"></th>
                     <th>Fecha</th>
                     <th>Hora</th>
                     <th>Departamento</th>
-                    <th>Cantidad de Clientes</th>
+                    <th>Cantidad Clientes</th>
+                    <th>Editado</th>
                 </tr>
             </thead>
-            <tbody>
-                <!-- Los datos serán cargados dinámicamente -->
-            </tbody>
+            <tbody></tbody>
         </table>
+
+        <!-- Búsqueda de proyecciones -->
+        <div class="mb-4">
+            <h3>Búsqueda en Proyecciones</h3>
+            <input type="text" id="searchProjection" class="form-control mb-2" placeholder="Buscar proyección">
+        </div>
+
+        <!-- Tabla de proyecciones -->
+        <table id="projectionTable" class="table table-striped table-hover">
+            <thead class="table-dark">
+                <tr>
+                    <th><input type="checkbox" id="selectAllProyecciones"></th>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Fecha</th>
+                    <th>Hora</th>
+                    <th>Departamento</th>
+                    <th>Cantidad Clientes</th>
+                    <th>Editado</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+
+        <!-- Botón para generar análisis -->
+        <button id="generateAnalysis" class="btn btn-primary w-100 my-4">Generar Análisis</button>
+
+        <!-- Gráficos -->
+        <div class="mt-5">
+            <h3 class="text-center">Comparativa entre Históricos y Proyecciones</h3>
+            <canvas id="comparisonChart" width="400" height="200"></canvas>
+            <h3 class="text-center mt-5">Desviación entre Históricos y Proyecciones</h3>
+            <canvas id="deviationChart" width="400" height="200"></canvas>
+        </div>
     </div>
-
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
     <script>
-        $(document).ready(function() {
-            const dataTable = $('#dataTable').DataTable({
-                language: {
-                    "emptyTable": "No hay información disponible",
-                    "info": "Mostrando _START_ a _END_ de _TOTAL_ entradas",
-                    "infoEmpty": "Mostrando 0 a 0 de 0 entradas",
-                    "infoFiltered": "(Filtrado de _MAX_ total de entradas)",
-                    "loadingRecords": "Cargando...",
-                    "processing": "Procesando...",
-                    "search": "Buscar:",
-                    "zeroRecords": "No se encontraron resultados",
-                    "paginate": {
-                        "first": "Primero",
-                        "last": "Último",
-                        "next": "Siguiente",
-                        "previous": "Anterior"
-                    }
+    $(document).ready(function () {
+        // Variables globales para los gráficos
+        let comparisonChart = null;
+        let deviationChart = null;
+
+        // Obtener datos de la tabla de históricos
+        function fetchHistoricos() {
+            const department = $('#filterDepartment').val();
+            const startDate = $('#startDate').val();
+            const endDate = $('#endDate').val();
+
+            $.get('controllers/DesempenosController.php', {
+                action: 'fetchHistoricos',
+                department,
+                startDate,
+                endDate
+            }, function (response) {
+                if (Array.isArray(response)) {
+                    const rows = response.map(item => `
+                        <tr>
+                            <td><input type="checkbox" class="historico-checkbox" data-value="${item.can_clientes}"></td>
+                            <td>${item.fecha_carga}</td>
+                            <td>${item.hora}</td>
+                            <td>${item.departamento}</td>
+                            <td>${item.can_clientes}</td>
+                            <td>${item.editado === 1 ? 'Sí' : 'No'}</td>
+                        </tr>
+                    `).join('');
+                    $('#dataTable tbody').html(rows);
                 }
-            });
+            }, 'json');
+        }
 
-            // Función para cargar datos desde el servidor
-            function loadHistoricos() {
-                const department = $('#filterDepartment').val();
-                const startDate = $('#startDate').val();
-                const endDate = $('#endDate').val();
+        // Obtener datos de la tabla de proyecciones
+        function fetchProyecciones() {
+            const search = $('#searchProjection').val();
 
-                console.log("Filtros enviados:", { department, startDate, endDate });
+            $.get('controllers/DesempenosController.php', {
+                action: 'fetchProyecciones',
+                search
+            }, function (response) {
+                if (Array.isArray(response)) {
+                    const rows = response.map(item => `
+                        <tr>
+                            <td><input type="checkbox" class="proyeccion-checkbox" data-value="${item.can_clientes}"></td>
+                            <td>${item.id}</td>
+                            <td>${item.nombre_proyeccion}</td>
+                            <td>${item.fecha}</td>
+                            <td>${item.hora}</td>
+                            <td>${item.departamento}</td>
+                            <td>${item.can_clientes}</td>
+                            <td>${item.editado === 1 ? 'Sí' : 'No'}</td>
+                        </tr>
+                    `).join('');
+                    $('#projectionTable tbody').html(rows);
+                }
+            }, 'json');
+        }
 
-                $.ajax({
-                    url: './controllers/HistoricosController.php?action=read',
-                    method: 'GET',
-                    data: { department, startDate, endDate },
-                    success: function(response) {
-                        console.log("Datos recibidos del servidor:", response);
+        // Generar los gráficos
+        function generateAnalysis() {
+            const historicos = $('.historico-checkbox:checked').map(function () {
+                return parseInt($(this).data('value'), 10);
+            }).get();
 
-                        dataTable.clear(); // Limpiar tabla
-                        if (response.length > 0) {
-                            response.forEach(row => {
-                                dataTable.row.add([
-                                    '<input type="checkbox" class="data-row-checkbox">',
-                                    row.fecha,
-                                    row.hora,
-                                    row.departamento,
-                                    row.can_clientes
-                                ]).draw();
-                            });
-                        }
-                    },
-                    error: function(xhr, status, error) {
-                        console.error("Error al cargar los datos:", status, error);
-                        console.log("Respuesta del servidor:", xhr.responseText);
-                    }
-                });
+            const proyecciones = $('.proyeccion-checkbox:checked').map(function () {
+                return parseInt($(this).data('value'), 10);
+            }).get();
+
+            if (historicos.length === 0 || proyecciones.length === 0) {
+                alert('Debes seleccionar al menos un registro en ambas tablas.');
+                return;
             }
 
-            // Recargar datos al cambiar los filtros
-            $('#filterDepartment, #startDate, #endDate').on('change', loadHistoricos);
+            // Calcular las sumas totales
+            const totalHistoricos = historicos.reduce((sum, value) => sum + value, 0);
+            const totalProyecciones = proyecciones.reduce((sum, value) => sum + value, 0);
+            const desviacion = Math.abs(totalProyecciones - totalHistoricos);
 
-            // Cargar datos al iniciar la página
-            loadHistoricos();
+            // Destruir gráficos anteriores
+            if (comparisonChart) comparisonChart.destroy();
+            if (deviationChart) deviationChart.destroy();
+
+            // Gráfico #1: Comparativa total de clientes
+            const ctxComparison = document.getElementById('comparisonChart').getContext('2d');
+            comparisonChart = new Chart(ctxComparison, {
+                type: 'bar',
+                data: {
+                    labels: ['Históricos', 'Proyecciones'],
+                    datasets: [{
+                        label: 'Total Clientes',
+                        data: [totalHistoricos, totalProyecciones],
+                        backgroundColor: ['rgba(54, 162, 235, 0.6)', 'rgba(255, 99, 132, 0.6)']
+                    }]
+                },
+                options: { responsive: true }
+            });
+
+            // Gráfico #2: Comparativa y desviación
+            const ctxDeviation = document.getElementById('deviationChart').getContext('2d');
+            deviationChart = new Chart(ctxDeviation, {
+                type: 'bar',
+                data: {
+                    labels: ['Históricos', 'Proyecciones', 'Desviación'],
+                    datasets: [{
+                        label: 'Comparativa y Desviación',
+                        data: [totalHistoricos, totalProyecciones, desviacion],
+                        backgroundColor: [
+                            'rgba(54, 162, 235, 0.6)',
+                            'rgba(255, 99, 132, 0.6)',
+                            'rgba(75, 192, 192, 0.6)'
+                        ]
+                    }]
+                },
+                options: { responsive: true }
+            });
+        }
+
+        // Eventos
+        $('#filterDepartment, #startDate, #endDate').on('change', fetchHistoricos);
+        $('#searchProjection').on('keyup', fetchProyecciones);
+        $('#generateAnalysis').on('click', generateAnalysis);
+
+        $('#selectAllHistoricos').on('change', function () {
+            $('.historico-checkbox').prop('checked', $(this).is(':checked'));
         });
-    </script>
+
+        $('#selectAllProyecciones').on('change', function () {
+            $('.proyeccion-checkbox').prop('checked', $(this).is(':checked'));
+        });
+
+        // Cargar datos iniciales
+        fetchHistoricos();
+        fetchProyecciones();
+    });
+</script>
+
 </body>
 </html>
