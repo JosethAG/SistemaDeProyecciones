@@ -34,6 +34,7 @@
             <table id="dataTable" class="table table-dark table-striped">
                     <thead>
                         <tr>
+                            <th>Id</th>
                             <th>Fecha</th>
                             <th>Hora</th>
                             <th>Departamento</th>

@@ -1,7 +1,7 @@
 <?php
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
-include('db.php');
+include 'sql/db2.php';
 header('Content-Type: application/json');
 
 if(isset($_FILES['archivo'])) {
@@ -19,7 +19,7 @@ if(isset($_FILES['archivo'])) {
             if ($index === 0) continue;
 
             if (empty($row[1]) || empty($row[2]) || empty($row[3]) || empty($row[4])) {
-                continue; // Si algún campo clave está vacío, salta a la siguiente fila
+                continue;
             }
 
             $id_usuario = 1;
