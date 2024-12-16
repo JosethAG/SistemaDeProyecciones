@@ -6,6 +6,7 @@ $(document).ready(function () {
             dataSrc: 'data'
         },
         columns: [
+            { data: 'id', visible: false},
             { data: 'fecha', className: 'editable' },
             { data: 'hora', className: 'editable' },
             { data: 'departamento', className: 'editable' },
@@ -53,6 +54,7 @@ $(document).ready(function () {
             url: 'actualizar_datos.php',
             method: 'POST',
             data: {
+                id: row.id,
                 fecha: row.fecha,
                 hora: row.hora,
                 departamento: row.departamento,
