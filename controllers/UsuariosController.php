@@ -1,9 +1,10 @@
 <?php
-require_once "../config/db.php";
-require_once "../models/UsuarioModel.php";
+require "../config/db.php";
+require "../models/usuarios.php";
 
-$db = (new Database())->getConnection();
-$user = new UsuarioModel($db);
+$dbClass = new Database();
+$db = $dbClass->getConnection();
+$user = new usuarios($db);
 
 $action = $_GET['action'] ?? '';
 
@@ -13,14 +14,20 @@ switch ($action) {
         $user->correo = $_POST['correo'];
         $user->contrasenna = $_POST['contrasenna'];
         $user->rol = $_POST['rol'];
-        echo $user->create() ? "Usuario creado exitosamente" : "Error al crear usuario";
+        echo $user->create() ? json_encode(["message" => "Usuario creado exitosamente"]) : json_encode(["error" => "Error al crear usuario"]);
         break;
 
     case 'read':
+        $id = $_GET['id'] ?? null;
         $nombre = $_GET['nombre'] ?? null;
         $correo = $_GET['correo'] ?? null;
         $rol = $_GET['rol'] ?? null;
-        $users = $user->readAll($nombre, $correo, $rol);
+        $contrasenna = null;
+
+        $stmt = $user->readAll($id, $nombre, $correo, $rol, $contrasenna);
+        $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        header('Content-Type: application/json');
         echo json_encode($users);
         break;
 
@@ -30,24 +37,22 @@ switch ($action) {
         $user->correo = $_POST['correo'];
         $user->contrasenna = $_POST['contrasenna'];
         $user->rol = $_POST['rol'];
-        echo $user->update() ? "Usuario actualizado exitosamente" : "Error al actualizar usuario";
+        echo $user->update() ? json_encode(["message" => "Usuario actualizado exitosamente"]) : json_encode(["error" => "Error al actualizar usuario"]);
         break;
 
     case 'delete':
         $user->id = $_POST['id'];
-        echo $user->delete() ? "Usuario eliminado exitosamente" : "Error al eliminar usuario";
+        echo $user->delete() ? json_encode(["message" => "Usuario eliminado exitosamente"]) : json_encode(["error" => "Error al eliminar usuario"]);
         break;
 
     case 'login':
         $email = $_POST['email'];
         $password = $_POST['password'];
         $error_message = $user->validateLogin($email, $password);
-        if ($error_message) {
-            echo $error_message;
-        }
+        echo $error_message ? json_encode(["error" => $error_message]) : json_encode(["message" => "Inicio de sesión exitoso"]);
         break;
 
     default:
-        echo "Acción no válida.";
+        echo json_encode(["error" => "Acción no válida."]);
 }
 ?>

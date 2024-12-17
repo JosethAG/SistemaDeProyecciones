@@ -20,7 +20,7 @@
           </ul>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-white" href="usuarios.php">USUARIOS</a>
+          <a class="nav-link text-white" href="usuarioDash.php">USUARIOS</a>
         </li>
         <li class="nav-item">
           <a class="nav-link text-white" href="reportes.php">REPORTES</a>
