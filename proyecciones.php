@@ -7,8 +7,12 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
+        <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+        <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <link rel="stylesheet" href="css/styles.css">
+        <script src="js/proyecciones.js"></script>
     </head>
     <body>
         <div id="menu">
@@ -21,7 +25,7 @@
         <div class="col-md-4">
             <label for="filterDepartment" class="form-label">Filtrar por Departamento:</label>
             <select id="filterDepartment" class="form-select">
-                <option value="">Todos</option>
+                <option value="Todos">Todos</option>
                 <option value="Servicio al Cliente">Servicio al Cliente</option>
                 <option value="Cajas">Cajas</option>
                 <option value="Crédito">Crédito</option>
@@ -30,10 +34,6 @@
         <div class="col-md-4">
             <label for="startDate" class="form-label">Fecha de Inicio:</label>
             <input type="date" id="startDate" class="form-control">
-        </div>
-        <div class="col-md-4">
-            <label for="endDate" class="form-label">Fecha Final:</label>
-            <input type="date" id="endDate" class="form-control">
         </div>
     </div>
 
@@ -45,7 +45,8 @@
         <table id="dataTable" class="table table-dark table-striped table-bordered">
             <thead>
                 <tr>
-                    <th><input type="checkbox" id="selectAllCheckbox"></th>
+                    <th><input type="checkbox" id="selectAllCheckbox"> Seleccionar</th>
+                    <th>Id</th>
                     <th>Fecha Carga</th>
                     <th>Fecha</th>
                     <th>Hora</th>
@@ -54,22 +55,20 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td><input type="checkbox" class="data-row-checkbox"></td>
-                    <td>2023-01-01</td>
-                    <td>2023-01-01</td>
-                    <td>10:00:00</td>
-                    <td>Servicio al Cliente</td>
-                    <td>15</td>
-                </tr>
+
             </tbody>
         </table>
     </div>
 
-    <div class="d-flex justify-content-start mt-4">
-        <button id="generateProjection" class="btn btn-primary">Generar Proyección</button>
+    <div class="row mt-4">
+        <div class="col-md-4">
+            <label for="nameProyection" class="form-label">Nombre de la Proyección:</label>
+            <input type="text" id="nameProyection"></input>
+        </div>
+        <div class="col-md-4">
+            <button id="generateProjection" class="btn btn-primary">Generar Proyección</button>
+        </div>
     </div>
-
         <div class="chart-container mt-5">
             <canvas id="projectionChart"></canvas>
         </div>
@@ -85,73 +84,11 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>2023-01-02</td>
-                        <td>10:00:00</td>
-                        <td>Servicio al Cliente</td>
-                        <td>25</td>
-                    </tr>
+
                 </tbody>
             </table>
             <button id="downloadResults" class="btn btn-success mt-3">Descargar Resultados</button>
         </div>
-        <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-        <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
-        <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-        <script>
-            $(document).ready(function() {
-                $('#dataTable').DataTable({
-                    language: {
-                        "decimal": "",
-                        "emptyTable": "No hay información",
-                        "info": "Mostrando _START_ a _END_ de _TOTAL_ entradas",
-                        "infoEmpty": "Mostrando 0 a 0 de 0 entradas",
-                        "infoFiltered": "(Filtrado de _MAX_ total de entradas)",
-                        "thousands": ",",
-                        "lengthMenu": "Mostrar _MENU_ entradas",
-                        "loadingRecords": "Cargando...",
-                        "processing": "Procesando...",
-                        "search": "Buscar:",
-                        "zeroRecords": "No se encontraron resultados",
-                        "paginate": {
-                            "first": "Primero",
-                            "last": "Último",
-                            "next": " Siguiente",
-                            "previous": "Anterior "
-                        }
-                    },
-                });
-
-                $('#selectAll, #selectAllCheckbox').on('click', function() {
-                    const allChecked = $('#selectAllCheckbox').prop('checked');
-                    $('.data-row-checkbox').prop('checked', !allChecked);
-                    $('#selectAllCheckbox').prop('checked', !allChecked);
-                });
-
-                const ctx = document.getElementById('projectionChart').getContext('2d');
-                const projectionChart = new Chart(ctx, {
-                    type: 'line',
-                    data: {
-                        labels: ['2023-01-01', '2023-01-02', '2023-01-03'],
-                        datasets: [{
-                            label: 'Proyección de Clientes',
-                            data: [10, 15, 12],
-                            backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                            borderColor: 'rgba(54, 162, 235, 1)',
-                            borderWidth: 1
-                        }]
-                    },
-                    options: {
-                        scales: {
-                            x: { beginAtZero: true },
-                            y: { beginAtZero: true }
-                        }
-                    }
-                });
-            });
-        </script>
 
     </body>
 </html>

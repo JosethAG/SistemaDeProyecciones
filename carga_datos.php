@@ -15,7 +15,7 @@
 </head>
 <body>
         <div id="menu">
-        <?php include 'menu.php'; ?>
+            <?php include 'menu.php'; ?>
         </div>
     <div class="container">
         <h2 class="text-center mt-4">Gestión de Datos</h2>
