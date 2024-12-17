@@ -1,14 +1,14 @@
 <?php
-class UsuariosModel {
+class usuarios {
     private $conn;
-    private $table_name = "Usuarios";
+    private $table_name = "usuarios";
 
     public function __construct($db) {
         $this->conn = $db;
     }
 
-    public function readAll($nombre, $correo, $rol) {
-        $query = "SELECT id, nombre, correo, rol FROM " . $this->table_name;
+    public function readAll($id,$nombre, $correo, $rol) {
+        $query = "SELECT * FROM " . $this->table_name;
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
         return $stmt;
