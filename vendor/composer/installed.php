@@ -1,24 +1,15 @@
 <?php return array(
     'root' => array(
-        'name' => '__root__',
+        'name' => 'joset/sistema-de-proyecciones',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => '6092ecd2fb4067e592d4e3aac24bb8086be0672c',
+        'reference' => 'f15e51c20cbd49f52f947403e35a890e27f802b4',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
         'dev' => true,
     ),
     'versions' => array(
-        '__root__' => array(
-            'pretty_version' => 'dev-main',
-            'version' => 'dev-main',
-            'reference' => '6092ecd2fb4067e592d4e3aac24bb8086be0672c',
-            'type' => 'library',
-            'install_path' => __DIR__ . '/../../',
-            'aliases' => array(),
-            'dev_requirement' => false,
-        ),
         'amphp/amp' => array(
             'pretty_version' => 'v2.6.4',
             'version' => '2.6.4.0',
@@ -88,6 +79,15 @@
             'reference' => '39321cb515c1e99128d28489b0187120ba7ce84c',
             'type' => 'library',
             'install_path' => __DIR__ . '/../andrewdalpino/okbloomer',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'joset/sistema-de-proyecciones' => array(
+            'pretty_version' => 'dev-main',
+            'version' => 'dev-main',
+            'reference' => 'f15e51c20cbd49f52f947403e35a890e27f802b4',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
             'dev_requirement' => false,
         ),

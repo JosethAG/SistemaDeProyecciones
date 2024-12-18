@@ -45,13 +45,6 @@ switch ($action) {
         echo $user->delete() ? json_encode(["message" => "Usuario eliminado exitosamente"]) : json_encode(["error" => "Error al eliminar usuario"]);
         break;
 
-    case 'login':
-        $email = $_POST['email'];
-        $password = $_POST['password'];
-        $error_message = $user->validateLogin($email, $password);
-        echo $error_message ? json_encode(["error" => $error_message]) : json_encode(["message" => "Inicio de sesión exitoso"]);
-        break;
-
     default:
         echo json_encode(["error" => "Acción no válida."]);
 }

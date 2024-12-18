@@ -31,14 +31,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             <?php if (!empty($error_message)) : ?>
                 <div class="alert alert-danger"><?= $error_message; ?></div>
             <?php endif; ?>
-            <form id="loginForm" method="POST" action="login.php">
+            <form id="loginForm" method="POST" action="controllers/procesar_login.php">
                 <div class="mb-3">
-                    <label for="email" class="form-label">Correo:</label>
-                    <input type="email" id="email" name="email" class="form-control" required>
+                    <label for="correo" class="form-label">Correo:</label>
+                    <input type="email" id="correo" name="correo" class="form-control" required>
                 </div>
                 <div class="mb-3">
-                    <label for="password" class="form-label">Contraseña:</label>
-                    <input type="password" id="password" name="password" class="form-control" required>
+                    <label for="contrasenna" class="form-label">Contraseña:</label>
+                    <input type="password" id="contrasenna" name="contrasenna" class="form-control" required>
                 </div>
                 <button type="submit" class="btn btn-outline-success w-100 mb-3">Iniciar Sesión</button>
                 <a href="registro.php" class="btn btn-outline-primary w-100">Registrarse</a>

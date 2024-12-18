@@ -19,12 +19,18 @@
             <li><a class="dropdown-item" href="desempenos.php">ANÁLISIS DE DESEMPEÑO</a></li>
           </ul>
         </li>
-        <li class="nav-item">
-          <a class="nav-link text-white" href="usuarioDash.php">USUARIOS</a>
-        </li>
+        <?php
+        session_start();
+
+        if (!isset($_SESSION["correo"]) || $_SESSION["rol"] === "Admin") {
+            // Si no es admin, no mostrar la opción de usuarios y salir
+            echo('<li class="nav-item">
+                    <a class="nav-link text-white" href="usuarioDash.php">USUARIOS</a>
+                  </li>');
+        }
+        ?>
         <li class="nav-item">
           <a class="nav-link text-white" href="reportes.php">REPORTES</a>
-        </li>
         </li>
         <li class="nav-item">
           <a class="nav-link text-white" href="logout.php">LOGOUT</a>
