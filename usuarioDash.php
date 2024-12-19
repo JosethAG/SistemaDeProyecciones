@@ -1,8 +1,4 @@
 <?php
-if (!isset($_SESSION["correo"]) || $_SESSION["rol"] !== "Admin") {
-    header("Location: index.php");
-    exit();
-}
 ?>
 <!DOCTYPE html>
 <html lang="en">
