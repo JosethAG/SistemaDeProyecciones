@@ -37,15 +37,10 @@
         </div>
     </div>
 
-    <div class="d-flex justify-content-start mt-3">
-        <button id="selectAll" class="btn btn-secondary">Seleccionar Todos</button>
-    </div>
-
     <div class="table-container">
         <table id="dataTable" class="table table-dark table-striped table-bordered">
             <thead>
                 <tr>
-                    <th><input type="checkbox" id="selectAllCheckbox"> Seleccionar</th>
                     <th>Id</th>
                     <th>Fecha Carga</th>
                     <th>Fecha</th>
@@ -87,7 +82,6 @@
 
                 </tbody>
             </table>
-            <button id="downloadResults" class="btn btn-success mt-3">Descargar Resultados</button>
         </div>
 
     </body>

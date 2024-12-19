@@ -27,9 +27,9 @@ if(isset($_FILES['archivo'])) {
             $hora = date('H:i:s', strtotime($row[2]));
             $departamento = $row[3];
             $can_clientes = (int)$row[4];
-            $editado = (int)$row[5];
+            // $editado = (int)$row[5];
 
-            $sql = "INSERT INTO historicos (id_usuario,fecha, hora, departamento, can_clientes, editado) VALUES ($id_usuario, '$fecha', '$hora', '$departamento', '$can_clientes', '$editado')";
+            $sql = "INSERT INTO historicos (id_usuario,fecha, hora, departamento, can_clientes) VALUES ($id_usuario, '$fecha', '$hora', '$departamento', '$can_clientes')";
             
             if ($conn->query($sql) === TRUE) {
                 // si funciono

@@ -6,12 +6,6 @@ $(document).ready(function() {
             dataSrc: 'data'
         },
         columns: [
-            { 
-                data: null, 
-                render: function(data, type, row) {
-                    return `<input type="checkbox" class="data-row-checkbox" data-id="${row.id}">`;
-                }
-            },
             { data: 'id', visible: false},
             { data: 'fecha_carga' },
             { data: 'fecha' },
@@ -21,7 +15,7 @@ $(document).ready(function() {
         ],
 
         columnDefs: [
-            { targets: [6], orderable: false }
+            { targets: [5], orderable: false }
         ],
 
         language: {
@@ -71,7 +65,7 @@ $(document).ready(function() {
         if (department === 'Todos'){
             department = '';
         }
-        table.column(5).search(department).draw();
+        table.column(4).search(department).draw();
     });
 
     $('#startDate').on('change', function() {
@@ -79,12 +73,6 @@ $(document).ready(function() {
         var endDate = $('#endDate').val();
         
         table.column(2).search(startDate ? '^' + startDate : '', true, false).draw();
-    });
-
-    $('#selectAll, #selectAllCheckbox').on('click', function() {
-        const allChecked = $('#selectAllCheckbox').prop('checked');
-        $('.data-row-checkbox').prop('checked', !allChecked);
-        $('#selectAllCheckbox').prop('checked', !allChecked);
     });
 
     $('#generateProjection').on('click', function () {
